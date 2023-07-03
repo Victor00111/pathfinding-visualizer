@@ -1,23 +1,14 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import Grid from './visual-components/Grid';
 
 function App() {
+  const rowSize = 40;
+  const colSize = 18;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React test
-        </a>
-      </header>
+    <div className="app">
+      <h1>Robot Navigation Simulator</h1>
+      <Grid rowSize={rowSize} colSize={colSize} />
     </div>
   );
 }
