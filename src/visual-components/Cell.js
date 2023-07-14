@@ -1,10 +1,11 @@
 import React from 'react';
 
-const Cell = ({ state, onDragStart, onDragEnter}) => {
+const Cell = ({ state, onMouseDown, onMouseEnter, onMouseUp}) => {
   return <div 
   className={`cell ${state}`}
-  onDragStart={onDragStart}
-  onDragEnter={onDragEnter}
+  onMouseDown={onMouseDown}
+  onMouseEnter={onMouseEnter}
+  onMouseUp={onMouseUp}
   ></div>;
 };
 
