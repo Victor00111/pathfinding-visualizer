@@ -1,7 +1,7 @@
 import React from 'react';
 import Cell from './Cell';
 
-const Grid = ({ grid, shortestPath, startPosition, targetPosition, onDragStart, onDragEnter, onDragEnd}) => {
+const Grid = ({grid, shortestPath, startPosition, targetPosition, onDragStart, onDragEnter, onDragEnd}) => {
   return (
     <div className="grid">
       {grid.map((row, rowIndex) => (
