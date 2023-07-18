@@ -2,10 +2,11 @@ import './App.css';
 import React, { useState } from 'react';
 import Grid from './visual-components/Grid';
 import dijkstra from './algorithms/Dijkstra';
+import bfs from './algorithms/BFS';
 
 function App() {
   const [grid, setGrid] = useState(Array(18).fill().map(_ => Array(40).fill('empty')));
-  const [algoType, setAlgoType] = useState('unweighted');
+  const [algoType, setAlgoType] = useState('Unweighted');
   const [startPosition, setStartPosition] = useState([0, 0]);
   const [targetPosition, setTargetPosition] = useState([0, 1]);
   const [shortestPath, setShortestPath] = useState([]);
@@ -33,13 +34,12 @@ function App() {
         }
       });
     });
-    console.log(weightedGrid)
     setGrid(weightedGrid)
   }
 
   const setGridSmall = () => {
     reset()
-    if (algoType === 'unweighted') {
+    if (algoType === 'Unweighted') {
       setGrid(Array(6).fill(Array(15).fill('empty')))
     } else {
       setWeightedGrid(7, 15)
@@ -48,16 +48,16 @@ function App() {
 
   const setGridMedium = () => {
     reset()
-    if (algoType === 'unweighted') {
+    if (algoType === 'Unweighted') {
       setGrid(Array(12).fill(Array(30).fill('empty')))
     } else {
-      setWeightedGrid(13, 27)
+      setWeightedGrid(13, 29)
     }
   }
 
   const setGridLarge = () => {
     reset()
-    if (algoType === 'unweighted') {
+    if (algoType === 'Unweighted') {
       setGrid(Array(18).fill(Array(40).fill('empty')))
     } else {
       setWeightedGrid(19, 41)
@@ -68,14 +68,23 @@ function App() {
     const path = dijkstra(grid, startPosition, targetPosition);
     setShortestPath(path);
     console.log(grid)
-  };
-
-  const handleDijkstra = () => {
-    setWeightedGrid(19, 41);
-    // setAlgoType('weighted');
-    // runDijkstra();
   }
 
+  const runBFS = () => {
+    const path = bfs(grid, startPosition, targetPosition);
+    setShortestPath(path);
+    console.log(grid)
+  }
+
+  const switchGrid = () => {
+    if (algoType === 'Unweighted') {
+      setAlgoType('Weighted')
+    } else {
+      setAlgoType('Unweighted')
+    }
+    setGridLarge()
+  }
+  
   const resetPath = () => {
     setShortestPath([]);
   }
@@ -115,8 +124,9 @@ function App() {
       <button onClick={setGridMedium}>Medium Graph</button>
       <button onClick={setGridLarge}>Large Graph</button>
       <button onClick={runDijkstra}>Run Dijkstra's Algorithm</button>
+      <button onClick={runBFS}>Run Breadth First Search</button>
       <button onClick={resetPath}>Reset</button>
-      <button onClick={handleDijkstra}>Test Weighted Grid</button>
+      <button onClick={switchGrid}>{algoType} Graph</button>
       <Grid 
         grid={grid} shortestPath={shortestPath} startPosition={startPosition} targetPosition={targetPosition}
         onDragStart={handleDragStart} onDragEnter={handleDragEnter} onDragEnd={handleDragEnd}
