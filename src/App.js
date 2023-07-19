@@ -5,10 +5,10 @@ import dijkstra from './algorithms/Dijkstra';
 import bfs from './algorithms/BFS';
 
 function App() {
-  const [grid, setGrid] = useState(Array(18).fill().map(_ => Array(40).fill('empty')));
+  const [grid, setGrid] = useState(Array(19).fill().map(_ => Array(41).fill('empty')));
   const [algoType, setAlgoType] = useState('Unweighted');
   const [startPosition, setStartPosition] = useState([0, 0]);
-  const [targetPosition, setTargetPosition] = useState([0, 1]);
+  const [targetPosition, setTargetPosition] = useState([0, 2]);
   const [shortestPath, setShortestPath] = useState([]);
   const [dragging, setDragging] = useState(null);
 
@@ -18,18 +18,18 @@ function App() {
       return row.map((cell, colIndex) => {
         if (rowIndex % 2 === 0) {
           if (colIndex % 2 === 1) {
-            return (Math.floor(Math.random()*10) + 1)
+            return (Math.floor(Math.random()*10) + 1);
           }
           else {
-            return 'empty'
+            return 'empty';
           }
         }
         else {
           if (colIndex % 2 === 0) {
-            return (Math.floor(Math.random()*10) + 1)
+            return (Math.floor(Math.random()*10) + 1);
           } 
           else {
-            return null
+            return 'wall';
           }
         }
       });
@@ -38,51 +38,51 @@ function App() {
   }
 
   const setGridSmall = () => {
-    reset()
+    reset();
     if (algoType === 'Unweighted') {
-      setGrid(Array(6).fill(Array(15).fill('empty')))
+      setGrid(Array(7).fill(Array(15).fill('empty')));
     } else {
-      setWeightedGrid(7, 15)
+      setWeightedGrid(7, 15);
     }
   }
 
   const setGridMedium = () => {
-    reset()
+    reset();
     if (algoType === 'Unweighted') {
-      setGrid(Array(12).fill(Array(30).fill('empty')))
+      setGrid(Array(13).fill(Array(29).fill('empty')));
     } else {
-      setWeightedGrid(13, 29)
+      setWeightedGrid(13, 29);
     }
   }
 
   const setGridLarge = () => {
-    reset()
+    reset();
     if (algoType === 'Unweighted') {
-      setGrid(Array(18).fill(Array(40).fill('empty')))
+      setGrid(Array(19).fill(Array(41).fill('empty')));
     } else {
-      setWeightedGrid(19, 41)
+      setWeightedGrid(19, 41);
     }
   }
 
   const runDijkstra = () => {
     const path = dijkstra(grid, startPosition, targetPosition);
     setShortestPath(path);
-    console.log(grid)
+    console.log(grid);
   }
 
   const runBFS = () => {
     const path = bfs(grid, startPosition, targetPosition);
     setShortestPath(path);
-    console.log(grid)
+    console.log(grid);
   }
 
   const switchGrid = () => {
     if (algoType === 'Unweighted') {
-      setAlgoType('Weighted')
+      setAlgoType('Weighted');
     } else {
-      setAlgoType('Unweighted')
+      setAlgoType('Unweighted');
     }
-    setGridLarge()
+    setGridLarge();
   }
   
   const resetPath = () => {
@@ -92,7 +92,7 @@ function App() {
   const reset = () => {
     setShortestPath([]);
     setStartPosition([0, 0]);
-    setTargetPosition([0, 1]);
+    setTargetPosition([0, 2]);
   }
 
   const handleDragStart = (position) => {
@@ -104,10 +104,10 @@ function App() {
   };
 
   const handleDragEnter = (position) => {
-    if (dragging === 'start') {
+    if (dragging === 'start' && grid[position[0]][position[1]] === 'empty') {
       resetPath();
       setStartPosition(position);
-    } else if (dragging === 'target') {
+    } else if (dragging === 'target' && grid[position[0]][position[1]] === 'empty') {
       resetPath();
       setTargetPosition(position);
     }
@@ -129,7 +129,7 @@ function App() {
       <button onClick={switchGrid}>{algoType} Graph</button>
       <Grid 
         grid={grid} shortestPath={shortestPath} startPosition={startPosition} targetPosition={targetPosition}
-        onDragStart={handleDragStart} onDragEnter={handleDragEnter} onDragEnd={handleDragEnd}
+        onDragStart={handleDragStart} onDragEnter={handleDragEnter} onDragEnd={handleDragEnd} algoType={algoType}
       />
     </div>
   );
