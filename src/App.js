@@ -18,7 +18,7 @@ function App() {
       return row.map((cell, colIndex) => {
         if (rowIndex % 2 === 0) {
           if (colIndex % 2 === 1) {
-            return (Math.floor(Math.random()*10) + 1);
+            return (Math.floor(Math.random()*9) + 1);
           }
           else {
             return 'empty';
@@ -26,7 +26,7 @@ function App() {
         }
         else {
           if (colIndex % 2 === 0) {
-            return (Math.floor(Math.random()*10) + 1);
+            return (Math.floor(Math.random()*9) + 1);
           } 
           else {
             return 'wall';

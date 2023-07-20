@@ -6,6 +6,7 @@
   display: grid;
   justify-content: center;
   align-items: center;
+  user-select: none;
 }
 
 .row {
@@ -15,35 +16,48 @@
 .cell {
   width: 30px;
   height: 30px;
-  border: 1px solid #ccc;
+  
 }
 
 .empty {
+  border: 1px solid rgb(224, 224, 224);
   background-color: white;
 }
 
-.obstacle {
-  background-color: gray;
-}
-
 .start {
+  border: 1px solid rgb(224, 224, 224);
   background-color: green;
 }
 
 .target {
+  border: 1px solid rgb(224, 224, 224);
   background-color: red;
 }
 
 .path {
+  border: 1px solid rgb(224, 224, 224);
   background-color: rgb(255, 243, 131);
 }
 
 .weight {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 30px;
   height: 30px;
-  background-color: rgb(230, 255, 255);
+  border: 1px solid rgb(232, 247, 254);
+  background-color: rgb(232, 247, 254);
+}
+
+.weightPath {
+  background-color: rgb(255, 243, 131);
 }
 
 .wall {
-  background-color: rgb(211, 211, 211);
+  border: 1px solid rgb(237, 237, 237);
+  background-color: rgb(237, 237, 237);
+}
+
+.obstacle {
+  background-color: white;
 }

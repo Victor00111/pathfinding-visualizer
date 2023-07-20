@@ -1,5 +1,6 @@
 import React from 'react';
 import Cell from './Cell';
+import Weight from './Weight';
 
 const Grid = ({grid, shortestPath, startPosition, targetPosition, onDragStart, onDragEnter, onDragEnd, algoType}) => {
   if (algoType === 'unweighted') {
@@ -42,15 +43,13 @@ const Grid = ({grid, shortestPath, startPosition, targetPosition, onDragStart, o
           <div className='row'>
             {row.map((cellState, columnIndex) => {
               const currentPosition = [rowIndex, columnIndex];
-              let weightValue = 0;
               const isPath = shortestPath.some(
                 (position) => position[0] === currentPosition[0] && position[1] === currentPosition[1]
               );
               if (!isNaN(grid[rowIndex][columnIndex])) {
                 cellState = 'weight';
-                weightValue = grid[rowIndex][columnIndex]
               } else if (grid[rowIndex][columnIndex] === 'wall') {
-                cellState = 'wall'
+                cellState = 'wall';
               } else if (rowIndex === startPosition[0] && columnIndex === startPosition[1]) {
                 cellState = 'start';
               } else if (rowIndex === targetPosition[0] && columnIndex === targetPosition[1]) {
@@ -58,16 +57,27 @@ const Grid = ({grid, shortestPath, startPosition, targetPosition, onDragStart, o
               } else if (isPath) {
                 cellState = 'path';
               }
-              <span>{cellState}</span>
-              return (
-                <Cell
-                  state={cellState}
-                  onMouseDown={() => onDragStart(currentPosition)}
-                  onMouseEnter={() => onDragEnter(currentPosition)}
-                  onMouseUp={onDragEnd}
-                  weightValue={weightValue}
-                />
-              );
+              if (cellState === 'weight') {
+                return (
+                  <Weight
+                    state={cellState}
+                    weight={grid[rowIndex][columnIndex]}
+                    onMouseDown={() => onDragStart(currentPosition)}
+                    onMouseEnter={() => onDragEnter(currentPosition)}
+                    onMouseUp={onDragEnd}
+                  />
+                )
+              }
+              else {
+                return (
+                  <Cell
+                    state={cellState}
+                    onMouseDown={() => onDragStart(currentPosition)}
+                    onMouseEnter={() => onDragEnter(currentPosition)}
+                    onMouseUp={onDragEnd}
+                  />
+                );
+              }
             })}
           </div>
         ))}

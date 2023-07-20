@@ -36,21 +36,27 @@ function dijkstra(grid, start, target) {
       const [currentRow, currentCol] = current;
       // Update distances and previous positions for neighbors of the current position
       const neighbors = [
-        [currentRow - 2, currentCol],
-        [currentRow + 2, currentCol],
-        [currentRow, currentCol - 2],
-        [currentRow, currentCol + 2],
+        [currentRow - 2, currentCol, currentRow - 1],
+        [currentRow + 2, currentCol, currentRow + 1],
+        [currentRow, currentCol - 2, currentCol - 1],
+        [currentRow, currentCol + 2, currentCol + 1],
     ];
 
     for (const neighbor of neighbors) {
-      const [neighborRow, neighborCol] = neighbor;
+      const [neighborRow, neighborCol, neighborWeight] = neighbor;
 
       // Check if the neighbor position is within the grid boundaries
       if (neighborRow >= 0 && neighborRow < numRows && neighborCol >= 0 && neighborCol < numCols) {
-        const distance = distances[currentRow][currentCol] + grid[neighborRow][neighborCol];
+        let distance = 0
+        if (neighborRow === currentRow - 2 || neighborRow === currentRow + 2) {
+          distance = distances[currentRow][currentCol] + grid[neighborWeight][currentCol]
+        } else {
+          distance = distances[currentRow][currentCol] + grid[currentRow][neighborWeight]
+        }
 
         // Update distances and previous positions if the tentative distance is smaller
         if (distance < distances[neighborRow][neighborCol]) {
+          console.log(distances);
           distances[neighborRow][neighborCol] = distance;
           previous[neighborRow][neighborCol] = current;
         }
