@@ -68,16 +68,17 @@ function App() {
     }
   }
 
-  const runDijkstra = () => {
-    const path = dijkstra(grid, startPosition, targetPosition);
-    setShortestPath(path);
-    console.log(grid);
-  }
-
-  const runBFS = () => {
-    const path = bfs(grid, startPosition, targetPosition);
-    setShortestPath(path);
-    console.log(grid);
+  const runAlgorithm = () => {
+    if (selectedAlgorithm === 'BFS') {
+      const path = bfs(grid, startPosition, targetPosition);
+      setShortestPath(path);
+      console.log(grid);
+    } else if (selectedAlgorithm === 'Dijkstra') {
+      const path = dijkstra(grid, startPosition, targetPosition);
+      setShortestPath(path);
+      console.log(grid);
+    }
+    
   }
 
   const handleAlgorithmChange = (algorithm) => {
@@ -128,7 +129,7 @@ function App() {
 
   return (
     <div className="app">
-      <h1>Robot Navigation Simulator</h1>
+      <h1>Pathfinding Visualizer</h1>
       <button onClick={setGridSmall}>Small Graph</button>
       <button onClick={setGridMedium}>Medium Graph</button>
       <button onClick={setGridLarge}>Large Graph</button>
@@ -137,8 +138,7 @@ function App() {
         selectedAlgorithm={selectedAlgorithm}
         onChange={handleAlgorithmChange}
       />
-      <button onClick={runDijkstra}>Run Dijkstra's Algorithm</button>
-      <button onClick={runBFS}>Run Breadth First Search</button>
+      <button onClick={runAlgorithm}>Run Algorithm</button>
       <button onClick={resetPath}>Reset Path</button>
       <Grid 
         grid={grid} shortestPath={shortestPath} startPosition={startPosition} targetPosition={targetPosition}
