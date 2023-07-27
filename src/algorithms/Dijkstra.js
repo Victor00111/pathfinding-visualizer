@@ -4,6 +4,7 @@ function dijkstra(grid, start, target) {
     const distances = Array(numRows).fill().map(() => Array(numCols).fill(Infinity));
     const previous = Array(numRows).fill().map(() => Array(numCols).fill(null));
     const unvisited = new Set();
+    let visitedCells = [];
   
     // Set start position to 0
     distances[start[0]][start[1]] = 0;
@@ -47,7 +48,7 @@ function dijkstra(grid, start, target) {
 
       // Check if the neighbor position is within the grid boundaries
       if (neighborRow >= 0 && neighborRow < numRows && neighborCol >= 0 && neighborCol < numCols) {
-        let distance = 0
+        let distance = 0;
         if (neighborRow === currentRow - 2 || neighborRow === currentRow + 2) {
           distance = distances[currentRow][currentCol] + grid[neighborWeight][currentCol];
         } else {
@@ -69,9 +70,11 @@ function dijkstra(grid, start, target) {
           */
         }
         // Return the shortest path if we've reached the target
-        if (current[0] === target[0] && current[1] === target[1]) {
-          return findShortestPath(previous, target);
+        if (neighborRow === target[0] && neighborCol === target[1]) {
+          return {path: findShortestPath(previous, target), visited: visitedCells};
         }
+
+        visitedCells = [...visitedCells, neighbor];
       }
     }
   }

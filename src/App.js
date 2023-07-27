@@ -14,8 +14,8 @@ function App() {
   const [targetPosition, setTargetPosition] = useState([0, 2]);
   const [shortestPath, setShortestPath] = useState([]);
   const [dragging, setDragging] = useState(null);
+  const [visitedCells, setVisitedCells] = useState([]);
   
-
   const setWeightedGrid = (row, col) => {
     const emptyGrid = Array(row).fill().map(_ => Array(col).fill('empty'));
     const weightedGrid = emptyGrid.map((row, rowIndex) => {
@@ -68,17 +68,32 @@ function App() {
     }
   }
 
-  const runAlgorithm = () => {
+  const runAlgorithm = async () => {
     if (selectedAlgorithm === 'BFS') {
-      const path = bfs(grid, startPosition, targetPosition);
-      setShortestPath(path);
+      const {path, visited} = bfs(grid, startPosition, targetPosition);
+      await animateVisitedCells(visited, 75);
+      await animateShortestPath(path, 50);
       console.log(grid);
     } else if (selectedAlgorithm === 'Dijkstra') {
-      const path = dijkstra(grid, startPosition, targetPosition);
-      setShortestPath(path);
+      const {path, visited} = dijkstra(grid, startPosition, targetPosition);
+      await animateVisitedCells(visited, 75);
+      await animateShortestPath(path, 50);
       console.log(grid);
     }
-    
+  }
+
+  async function animateVisitedCells(visited, delay) {
+    for (const cell of visited) {
+      setVisitedCells((prevVisitedCell) => [...prevVisitedCell, cell]);
+      await new Promise((resolve) => setTimeout(resolve, delay));
+    }
+  }
+
+  async function animateShortestPath(path, delay) {
+    for (const cell of path) {
+      setShortestPath((prevShortestPath) => [...prevShortestPath, cell]);
+      await new Promise((resolve) => setTimeout(resolve, delay));
+    }
   }
 
   const handleAlgorithmChange = (algorithm) => {
@@ -93,14 +108,17 @@ function App() {
 
   useEffect(() => {
     setGridMedium();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [algoType]);
 
   const resetPath = () => {
     setShortestPath([]);
+    setVisitedCells([]);
   }
 
   const reset = () => {
     setShortestPath([]);
+    setVisitedCells([]);
     setStartPosition([0, 0]);
     setTargetPosition([0, 2]);
   }
@@ -141,7 +159,7 @@ function App() {
       <button onClick={runAlgorithm}>Run Algorithm</button>
       <button onClick={resetPath}>Reset Path</button>
       <Grid 
-        grid={grid} shortestPath={shortestPath} startPosition={startPosition} targetPosition={targetPosition}
+        grid={grid} shortestPath={shortestPath} visitedCells={visitedCells} startPosition={startPosition} targetPosition={targetPosition}
         onDragStart={handleDragStart} onDragEnter={handleDragEnter} onDragEnd={handleDragEnd} algoType={algoType}
       />
     </div>

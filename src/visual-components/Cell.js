@@ -7,9 +7,7 @@ const Cell = ({ state, onMouseDown, onMouseEnter, onMouseUp}) => {
     onMouseDown={onMouseDown}
     onMouseEnter={onMouseEnter}
     onMouseUp={onMouseUp}
-  >
-    
-  </div>;
+  ></div>;
 };
 
 export default Cell;

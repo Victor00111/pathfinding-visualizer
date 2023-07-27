@@ -1,14 +1,15 @@
-function bfs(grid, start, target) {
+function bfs(grid, start, target, delay) {
   const queue = [start];
   const visited = new Set();
   const previous = new Map();
+  let visitedCells = [];
 
   while (queue.length > 0) {
     const current = queue.shift();
 
     // Check if the target is found
     if (current[0] === target[0] && current[1] === target[1]) {
-      return getPath(previous, start, target);
+      return {path: getPath(previous, start, target), visited: visitedCells};
     }
 
     // Explore neighbors
@@ -19,12 +20,13 @@ function bfs(grid, start, target) {
         visited.add(neighborString);
         queue.push(neighbor);
         previous.set(neighborString, current);
+        visitedCells = [...visitedCells, neighbor];
       }
     }
   }
 
   // If no path is found
-  return null;
+  return {path: [], visitedCells: visitedCells};
 }
 
 function getNeighbors(grid, [row, col]) {
