@@ -20,7 +20,7 @@ function bfs(grid, start, target, delay) {
         visited.add(neighborString);
         queue.push(neighbor);
         previous.set(neighborString, current);
-        visitedCells = [...visitedCells, neighbor];
+        visitedCells = [...visitedCells, current];
       }
     }
   }

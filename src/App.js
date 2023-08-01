@@ -8,6 +8,7 @@ import bfs from './algorithms/BFS';
 function App() {
   const algorithms = ['BFS', 'Dijkstra'];
   const [grid, setGrid] = useState(Array(19).fill().map(_ => Array(41).fill('empty')));
+  const [gridSize, setGridSize] = useState('medium');
   const [algoType, setAlgoType] = useState('Unweighted');
   const [selectedAlgorithm, setSelectedAlgorithm] = useState(algorithms[0]);
   const [startPosition, setStartPosition] = useState([0, 0]);
@@ -41,42 +42,29 @@ function App() {
     setGrid(weightedGrid)
   }
 
-  const setGridSmall = () => {
+  const handleGridSize = (size) => {
     reset();
     if (algoType === 'Unweighted') {
-      setGrid(Array(7).fill(Array(15).fill('empty')));
+      if (size === 'small') setGrid(Array(7).fill(Array(15).fill('empty')));
+      else if (size === 'medium') setGrid(Array(13).fill(Array(29).fill('empty')));
+      else setGrid(Array(19).fill(Array(41).fill('empty')));
     } else {
-      setWeightedGrid(7, 15);
+      if ((size === 'small')) setWeightedGrid(7, 15);
+      else if (size === 'medium') setWeightedGrid(13, 29);
+      else setWeightedGrid(19, 41);
     }
-  }
-
-  const setGridMedium = () => {
-    reset();
-    if (algoType === 'Unweighted') {
-      setGrid(Array(13).fill(Array(29).fill('empty')));
-    } else {
-      setWeightedGrid(13, 29);
-    }
-  }
-
-  const setGridLarge = () => {
-    reset();
-    if (algoType === 'Unweighted') {
-      setGrid(Array(19).fill(Array(41).fill('empty')));
-    } else {
-      setWeightedGrid(19, 41);
-    }
+    setGridSize(size);
   }
 
   const runAlgorithm = async () => {
     if (selectedAlgorithm === 'BFS') {
       const {path, visited} = bfs(grid, startPosition, targetPosition);
-      await animateVisitedCells(visited, 75);
+      await animateVisitedCells(visited, 40);
       await animateShortestPath(path, 50);
       console.log(grid);
     } else if (selectedAlgorithm === 'Dijkstra') {
       const {path, visited} = dijkstra(grid, startPosition, targetPosition);
-      await animateVisitedCells(visited, 75);
+      await animateVisitedCells(visited, 40);
       await animateShortestPath(path, 50);
       console.log(grid);
     }
@@ -103,11 +91,10 @@ function App() {
     } else {
       setAlgoType('Weighted');
     }
-    setGridMedium();
   };
 
   useEffect(() => {
-    setGridMedium();
+    handleGridSize(gridSize);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [algoType]);
 
@@ -148,9 +135,9 @@ function App() {
   return (
     <div className="app">
       <h1>Pathfinding Visualizer</h1>
-      <button onClick={setGridSmall}>Small Graph</button>
-      <button onClick={setGridMedium}>Medium Graph</button>
-      <button onClick={setGridLarge}>Large Graph</button>
+      <button onClick={() => handleGridSize('small')}>Small Graph</button>
+      <button onClick={() => handleGridSize('medium')}>Medium Graph</button>
+      <button onClick={() => handleGridSize('large')}>Large Graph</button>
       <AlgorithmDropdown
         algorithms={algorithms}
         selectedAlgorithm={selectedAlgorithm}
