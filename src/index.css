@@ -54,8 +54,14 @@
   background-color: rgb(232, 247, 254);
 }
 
-.weightPath {
-  background-color: rgb(255, 243, 131);
+.weightpath {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgb(253, 247, 186);
+  background-color: rgb(253, 247, 186);
 }
 
 .wall {

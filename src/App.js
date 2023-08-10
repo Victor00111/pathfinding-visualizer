@@ -61,16 +61,17 @@ function App() {
       const {path, visited} = bfs(grid, startPosition, targetPosition);
       await animateVisitedCells(visited, 40);
       await animateShortestPath(path, 50);
-      console.log(grid);
+      //console.log(grid);
     } else if (selectedAlgorithm === 'Dijkstra') {
       const {path, visited} = dijkstra(grid, startPosition, targetPosition);
       await animateVisitedCells(visited, 40);
       await animateShortestPath(path, 50);
-      console.log(grid);
+      //console.log(grid);
     }
   }
 
   async function animateVisitedCells(visited, delay) {
+    console.log(visited)
     for (const cell of visited) {
       setVisitedCells((prevVisitedCell) => [...prevVisitedCell, cell]);
       await new Promise((resolve) => setTimeout(resolve, delay));
@@ -145,7 +146,7 @@ function App() {
       />
       <button onClick={runAlgorithm}>Run Algorithm</button>
       <button onClick={resetPath}>Reset Path</button>
-      <Grid 
+      <Grid
         grid={grid} shortestPath={shortestPath} visitedCells={visitedCells} startPosition={startPosition} targetPosition={targetPosition}
         onDragStart={handleDragStart} onDragEnter={handleDragEnter} onDragEnd={handleDragEnd} algoType={algoType}
       />

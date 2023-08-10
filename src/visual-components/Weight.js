@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Weight = ({ weight, onMouseDown, onMouseEnter, onMouseUp}) => {
+const Weight = ({ state, weight, onMouseDown, onMouseEnter, onMouseUp}) => {
   
   return <div 
-    className='weight'
+    className={state}
     onMouseDown={onMouseDown}
     onMouseEnter={onMouseEnter}
     onMouseUp={onMouseUp}

@@ -58,16 +58,16 @@ function dijkstra(grid, start, target) {
         // Update distances and previous positions if the tentative distance is smaller
         if (distance < distances[neighborRow][neighborCol]) {
           distances[neighborRow][neighborCol] = distance;
-          previous[neighborRow][neighborCol] = current;
-          /*
+          
           if (neighborRow === currentRow - 2 || neighborRow === currentRow + 2) {
-            previous[neighborRow][neighborCol] = previous[neighborWeight][neighborCol];
             previous[neighborWeight][neighborCol] = current;
+            previous[neighborRow][neighborCol] = [neighborWeight, neighborCol];
           } else {
-            previous[neighborRow][neighborCol] = previous[neighborRow][neighborWeight];
             previous[neighborRow][neighborWeight] = current;
+            previous[neighborRow][neighborCol] = [neighborRow, neighborWeight];
+            
           }
-          */
+          
         }
         // Return the shortest path if we've reached the target
         if (neighborRow === target[0] && neighborCol === target[1]) {
@@ -83,6 +83,7 @@ function dijkstra(grid, start, target) {
 }
 
 function findShortestPath(previous, target) {
+  console.log(previous)
   // Construct the shortest path
   const shortestPath = [];
   let currentPosition = target;
