@@ -48,14 +48,17 @@ const Grid = ({grid, shortestPath, visitedCells, startPosition, targetPosition, 
               const isPath = shortestPath.some(
                 (position) => position[0] === currentPosition[0] && position[1] === currentPosition[1]
               );
-              const isVisited = visitedCells.some(
+              const visitedIndex = visitedCells.findIndex(
                 (position) => position[0] === currentPosition[0] && position[1] === currentPosition[1]
               );
 
               if (!isNaN(grid[rowIndex][columnIndex])) cellState = 'weight';
               else if (grid[rowIndex][columnIndex] === 'wall') cellState = 'wall';
               
-              if (isVisited && !isPath) cellState = 'visited';
+              if (visitedIndex > 0 && !isPath) {
+                cellState = 'visited';
+                if (visitedIndex % 2 === 1) cellState = 'visitedweight';
+              }
               if (rowIndex === startPosition[0] && columnIndex === startPosition[1]) cellState = 'start';
               else if (rowIndex === targetPosition[0] && columnIndex === targetPosition[1]) cellState = 'target';
               else if (isPath) {
@@ -63,7 +66,7 @@ const Grid = ({grid, shortestPath, visitedCells, startPosition, targetPosition, 
                 else cellState = 'path';
               }
 
-              if (cellState === 'weight' || cellState === 'weightpath') {
+              if (cellState === 'weight' || cellState === 'weightpath' || cellState === 'visitedweight') {
                 return (
                   <Weight
                     state={cellState}

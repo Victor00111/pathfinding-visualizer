@@ -64,7 +64,7 @@ function App() {
       //console.log(grid);
     } else if (selectedAlgorithm === 'Dijkstra') {
       const {path, visited} = dijkstra(grid, startPosition, targetPosition);
-      await animateVisitedCells(visited, 40);
+      await animateVisitedCells(visited, 60);
       await animateShortestPath(path, 50);
       //console.log(grid);
     }

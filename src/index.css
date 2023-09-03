@@ -16,7 +16,6 @@
 .cell {
   width: 30px;
   height: 30px;
-  
 }
 
 .empty {
@@ -37,6 +36,16 @@
 .visited {
   border: 1px solid rgb(224, 224, 224);
   background-color: rgb(211, 252, 209);
+}
+
+.visitedweight {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgb(224, 224, 224);
+  background-color: rgb(232, 253, 228);
 }
 
 .path {
