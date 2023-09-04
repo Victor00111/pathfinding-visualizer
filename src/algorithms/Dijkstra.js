@@ -29,8 +29,7 @@ function dijkstra(grid, start, target) {
       }
     }
 
-    // Add current to visited
-    
+    // Add current and its respective weight to visited
     if (previous[current[0]][current[1]] !== null) {
       visitedCells = [...visitedCells, previous[current[0]][current[1]]];
     } 
@@ -84,7 +83,6 @@ function dijkstra(grid, start, target) {
 }
 
 function findShortestPath(previous, target) {
-  console.log(previous)
   // Construct the shortest path
   const shortestPath = [];
   let currentPosition = target;

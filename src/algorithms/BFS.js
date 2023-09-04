@@ -7,11 +7,6 @@ function bfs(grid, start, target, delay) {
   while (queue.length > 0) {
     const current = queue.shift();
 
-    // Check if the target is found
-    if (current[0] === target[0] && current[1] === target[1]) {
-      return {path: getPath(previous, start, target), visited: visitedCells};
-    }
-
     // Explore neighbors
     const neighbors = getNeighbors(grid, current);
     for (const neighbor of neighbors) {
@@ -20,7 +15,12 @@ function bfs(grid, start, target, delay) {
         visited.add(neighborString);
         queue.push(neighbor);
         previous.set(neighborString, current);
-        visitedCells = [...visitedCells, current];
+        visitedCells = [...visitedCells, neighbor];
+      }
+
+      // Check if the target is found
+      if (neighbor[0] === target[0] && neighbor[1] === target[1]) {
+        return {path: getPath(previous, start, target), visited: visitedCells};
       }
     }
   }
@@ -53,7 +53,7 @@ function getPath(previous, start, target) {
   const path = [];
   let current = target;
 
-  while (current[0] !== start[0] || current[1] !== start[1]) {
+  while (!(current[0] === start[0] && current[1] === start[1])) {
     path.unshift(current);
     current = previous.get(current.join(','));
   }
