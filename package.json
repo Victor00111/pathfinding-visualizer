@@ -2,7 +2,7 @@
   "name": "pathfinding-visualizer",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://gitname.github.io/react-gh-pages",
+  "homepage": "https://victor00111.github.io/pathfinding-visualizer",
   "predeploy": "npm run build",
   "deploy": "gh-pages -d build",
   "dependencies": {
